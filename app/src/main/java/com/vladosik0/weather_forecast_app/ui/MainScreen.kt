@@ -91,14 +91,16 @@ fun LocationItem(
                 .padding(8.dp),
             verticalAlignment = Alignment.CenterVertically,
         ) {
+            Column(modifier = Modifier.weight(1f)) {
+                Text(
+                    text = locationName, fontSize = 24.sp
+                )
+                Text(
+                    text = "Local time: 16:08"
+                )
+            }
             Text(
-                text = locationName,
-                modifier = Modifier.weight(1f),
-                fontSize = 24.sp
-            )
-            Text(
-                text = "$temperature°C",
-                fontSize = 24.sp
+                text = "$temperature°C", fontSize = 24.sp
             )
             Image(
                 modifier = Modifier.size(64.dp),
