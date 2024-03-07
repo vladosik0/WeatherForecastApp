@@ -1,4 +1,4 @@
-package com.vladosik0.weather_forecast_app.ui
+package com.vladosik0.weather_forecast_app.ui.main_screen
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
