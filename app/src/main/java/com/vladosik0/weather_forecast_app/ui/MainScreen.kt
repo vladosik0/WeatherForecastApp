@@ -1,20 +1,16 @@
 package com.vladosik0.weather_forecast_app.ui
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.HorizontalDivider
-import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -23,10 +19,8 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -58,7 +52,7 @@ fun MainScreen() {
                 modifier = Modifier.padding(6.dp)
             )
             HorizontalDivider(thickness = 2.dp, modifier = Modifier.padding(6.dp))
-            LocationItem(locationName = "Kyiv", temperature = 5, weatherIcon = 116)
+            LocationItem(locationName = "Kyiv", temperature = 5)
             Text(
                 text = stringResource(id = R.string.favourite_places_title),
                 fontSize = 28.sp,
@@ -66,13 +60,13 @@ fun MainScreen() {
                 modifier = Modifier.padding(6.dp)
             )
             HorizontalDivider(thickness = 2.dp, modifier = Modifier.padding(6.dp))
-            LocationItem(locationName = "London", temperature = 2, weatherIcon = 113)
-            LocationItem(locationName = "Kyiv", temperature = 5, weatherIcon = 116)
-            LocationItem(locationName = "New York", temperature = 7, weatherIcon = 119)
-            LocationItem(locationName = "Madrid", temperature = 8, weatherIcon = 260)
-            LocationItem(locationName = "Amsterdam", temperature = 10, weatherIcon = 296)
-            LocationItem(locationName = "Lisbon", temperature = 3, weatherIcon = 299)
-            LocationItem(locationName = "Munich", temperature = -2, weatherIcon = 122)
+            LocationItem(locationName = "London", temperature = 2)
+            LocationItem(locationName = "Kyiv", temperature = 5)
+            LocationItem(locationName = "New York", temperature = 7)
+            LocationItem(locationName = "Madrid", temperature = 8)
+            LocationItem(locationName = "Amsterdam", temperature = 10)
+            LocationItem(locationName = "Lisbon", temperature = 3)
+            LocationItem(locationName = "Munich", temperature = -2)
         }
     }
 }
@@ -81,7 +75,6 @@ fun MainScreen() {
 fun LocationItem(
     locationName: String,
     temperature: Int,
-    weatherIcon: Int,
     modifier: Modifier = Modifier
 ) {
     Card(
