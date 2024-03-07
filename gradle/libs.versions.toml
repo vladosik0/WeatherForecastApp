@@ -6,6 +6,7 @@ core-ktx = "1.12.0"
 espresso-core = "3.5.1"
 junit = "4.13.2"
 kotlinx-coroutines-android = "1.7.1"
+kotlinx-serialization-json = "1.6.0"
 lifecycle-runtime-ktx = "2.7.0"
 navigation-compose = "2.7.7"
 retrofit = "2.9.0"
@@ -13,6 +14,7 @@ room-runtime = "2.6.1"
 compose-bom = "2024.02.01"
 kotlin = "1.9.0"
 ksp = "1.9.21-1.0.15"
+serialization = "1.7.10"
 
 [libraries]
 androidx-activity-compose = { module = "androidx.activity:activity-compose", version.ref = "activity-compose" }
@@ -29,6 +31,7 @@ androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "retrofit" }
 junit = { module = "junit:junit", version.ref = "junit" }
 kotlinx-coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android", version.ref = "kotlinx-coroutines-android" }
+kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization-json" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
 androidx-compose-ui = { group = "androidx.compose.ui", name = "ui"}
@@ -43,3 +46,4 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidApplication = { id = "com.android.application", version.ref = "agp" }
 jetbrainsKotlin = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization"}

@@ -1,12 +1,19 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlin)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.serialization)
 }
 
 android {
     namespace = "com.vladosik0.weather_forecast_app"
     compileSdk = 34
+
+    buildFeatures {
+        buildConfig = true
+    }
 
     defaultConfig {
         applicationId = "com.vladosik0.weather_forecast_app"
@@ -19,6 +26,13 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
+
+        val keystoreFile = project.rootProject.file("api_keys.properties")
+        val properties = Properties()
+        properties.load(keystoreFile.inputStream())
+
+        val apiKey = properties.getProperty("API_KEY") ?: ""
+        buildConfigField(type = "String", name = "API_KEY", value = apiKey )
     }
 
     buildTypes {
@@ -68,6 +82,7 @@ dependencies {
     // Retrofit and JSON converter
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
+    implementation(libs.kotlinx.serialization.json)
     // To use Kotlin Symbol Processing (KSP)
     ksp(libs.androidx.room.compiler)
     // Kotlin Extensions and Coroutines support for Room
