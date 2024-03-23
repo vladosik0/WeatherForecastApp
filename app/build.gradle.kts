@@ -82,7 +82,6 @@ dependencies {
     // Retrofit and JSON converter
     implementation(libs.retrofit)
     implementation(libs.converter.gson)
-    implementation(libs.kotlinx.serialization.json)
     // To use Kotlin Symbol Processing (KSP)
     ksp(libs.androidx.room.compiler)
     // Kotlin Extensions and Coroutines support for Room
