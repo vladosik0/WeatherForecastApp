@@ -76,6 +76,8 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.android)
+    // Location
+    implementation(libs.play.services.location)
     // Room database
     implementation(libs.androidx.room.runtime)
     annotationProcessor(libs.androidx.room.compiler)
@@ -90,8 +92,16 @@ dependencies {
     implementation(libs.androidx.lifecycle.viewmodel.ktx)
     // ViewModel utilities for Compose
     implementation(libs.androidx.lifecycle.viewmodel.compose)
-    //Compose Navigation
+    // Compose Navigation
     implementation(libs.androidx.navigation.compose)
+    // Lottie
+    implementation(libs.lottie.compose)
+    // Accompanist
+    implementation(libs.accompanist.navigation.animation)
+    // Android activity lifecycle
+    implementation(libs.androidx.lifecycle.runtime.compose)
+    // Coil(async images)
+    implementation(libs.coil.kt.coil.compose)
     // Testing
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

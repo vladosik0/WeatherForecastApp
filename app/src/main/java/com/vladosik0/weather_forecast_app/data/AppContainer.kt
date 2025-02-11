@@ -1,15 +1,15 @@
-package com.vladosik0.weather_forecast_app.main_screen.data
+package com.vladosik0.weather_forecast_app.data
 
-import com.vladosik0.weather_forecast_app.main_screen.data.network.CurrentWeatherApiService
+import com.vladosik0.weather_forecast_app.data.network.CurrentWeatherApiService
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-interface MainScreenContainer {
+interface AppContainer {
     val currentWeatherRepository: CurrentWeatherRepository
 }
 
-class DefaultMainScreenContainer() : MainScreenContainer {
-    private val baseUrl = "http://api.weatherapi.com/v1/current.json"
+class DefaultAppContainer : AppContainer {
+    private val baseUrl = "https://api.weatherapi.com/v1/"
 
     private val retrofit = Retrofit.Builder()
         .addConverterFactory(GsonConverterFactory.create())

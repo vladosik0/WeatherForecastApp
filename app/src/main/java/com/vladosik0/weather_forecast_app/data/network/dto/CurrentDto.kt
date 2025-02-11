@@ -1,4 +1,4 @@
-package com.vladosik0.weather_forecast_app.main_screen.data.network.dto
+package com.vladosik0.weather_forecast_app.data.network.dto
 
 
 data class CurrentDto(
