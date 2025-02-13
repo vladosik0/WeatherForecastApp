@@ -1,5 +1,8 @@
 package com.vladosik0.weather_forecast_app.presentation.view_models
 
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladosik0.weather_forecast_app.data.CurrentWeatherRepository
@@ -17,15 +20,19 @@ class MainScreenViewModel(
     private val currentWeatherRepository: CurrentWeatherRepository
 ) : ViewModel() {
 
+//    var mainScreenUiState: MainScreenUiState by mutableStateOf(MainScreenUiState.LOADING)
+//        private set
+
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
     private val favouritePlaces = listOf(
         "London", "Kyiv", "New York", "Madrid", "Amsterdam", "Lisbon", "Munich", "Tokyo"
     )
+
     private val _favouritePlacesWeathers = MutableStateFlow(listOf<CurrentLocationWeather>())
     val favouritePlacesWeathers = _favouritePlacesWeathers
-        .onStart { getAllCurrentLocationWeathers() }
+        .onStart { getFavouritePlacesWeathers() }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -42,7 +49,7 @@ class MainScreenViewModel(
             CurrentLocationWeather()
         )
 
-    private fun getAllCurrentLocationWeathers() {
+    private fun getFavouritePlacesWeathers() {
         viewModelScope.launch {
             _favouritePlacesWeathers.value = currentWeatherRepository.getFavouritePlacesWeathers(favouritePlaces)
             _isRefreshing.update { false }
@@ -55,10 +62,14 @@ class MainScreenViewModel(
         }
     }
 
+//    private fun detectKindOfError() {
+//        return
+//    }
+
     fun onPullToRefreshTrigger() {
         _isRefreshing.update { true }
         getCurrentPlaceWeather()
-        getAllCurrentLocationWeathers()
+        getFavouritePlacesWeathers()
     }
 
 }

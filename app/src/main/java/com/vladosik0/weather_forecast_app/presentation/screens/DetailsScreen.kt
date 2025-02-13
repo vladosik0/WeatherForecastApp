@@ -34,7 +34,6 @@ import androidx.compose.material3.VerticalDivider
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -62,7 +61,7 @@ fun DetailsScreen(navController: NavController, cityName: String) {
                           Icon(
                               imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                               contentDescription = "Return",
-                              tint = Color.White
+                              tint = MaterialTheme.colorScheme.onPrimary
                           )
                       }
                   })
