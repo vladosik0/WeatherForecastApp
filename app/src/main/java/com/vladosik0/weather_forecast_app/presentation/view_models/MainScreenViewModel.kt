@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladosik0.weather_forecast_app.data.CurrentWeatherRepository
 import com.vladosik0.weather_forecast_app.domain.CurrentLocationWeather
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -20,8 +21,8 @@ class MainScreenViewModel(
     private val currentWeatherRepository: CurrentWeatherRepository
 ) : ViewModel() {
 
-//    var mainScreenUiState: MainScreenUiState by mutableStateOf(MainScreenUiState.LOADING)
-//        private set
+    var mainScreenUiState: MainScreenUiState by mutableStateOf(MainScreenUiState.LOADING)
+        private set
 
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
@@ -32,7 +33,11 @@ class MainScreenViewModel(
 
     private val _favouritePlacesWeathers = MutableStateFlow(listOf<CurrentLocationWeather>())
     val favouritePlacesWeathers = _favouritePlacesWeathers
-        .onStart { getFavouritePlacesWeathers() }
+        .onStart {
+            getFavouritePlacesWeathers()
+            delay(1000)
+            checkUiState()
+        }
         .stateIn(
             viewModelScope,
             SharingStarted.WhileSubscribed(5000L),
@@ -40,6 +45,7 @@ class MainScreenViewModel(
         )
 
     private val currentPlace = "Lebedyn"
+
     private val _currentPlaceWeather = MutableStateFlow(CurrentLocationWeather())
     val currentPlaceWeather = _currentPlaceWeather
         .onStart { getCurrentPlaceWeather() }
@@ -49,27 +55,29 @@ class MainScreenViewModel(
             CurrentLocationWeather()
         )
 
-    private fun getFavouritePlacesWeathers() {
-        viewModelScope.launch {
-            _favouritePlacesWeathers.value = currentWeatherRepository.getFavouritePlacesWeathers(favouritePlaces)
-            _isRefreshing.update { false }
-        }
+    private suspend fun getFavouritePlacesWeathers() {
+        _favouritePlacesWeathers.value = currentWeatherRepository.getFavouritePlacesWeathers(favouritePlaces)
+        _isRefreshing.update { false }
     }
 
-    private fun getCurrentPlaceWeather() {
-        viewModelScope.launch {
-            _currentPlaceWeather.value = currentWeatherRepository.getCurrentWeather(currentPlace)
-        }
+    private suspend fun getCurrentPlaceWeather() {
+        _currentPlaceWeather.value = currentWeatherRepository.getCurrentWeather(currentPlace)
     }
 
-//    private fun detectKindOfError() {
-//        return
-//    }
+    private fun checkUiState() {
+        mainScreenUiState = if (_favouritePlacesWeathers.value.contains(CurrentLocationWeather())) {
+            MainScreenUiState.LOADING
+        } else if(_currentPlaceWeather.value == CurrentLocationWeather()) {
+            MainScreenUiState.LOADING
+        } else {
+            MainScreenUiState.SUCCESS
+        }
+    }
 
     fun onPullToRefreshTrigger() {
         _isRefreshing.update { true }
-        getCurrentPlaceWeather()
-        getFavouritePlacesWeathers()
+        viewModelScope.launch { getCurrentPlaceWeather() }
+        viewModelScope.launch { getFavouritePlacesWeathers() }
     }
 
 }
