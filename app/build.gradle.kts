@@ -17,7 +17,7 @@ android {
 
     defaultConfig {
         applicationId = "com.vladosik0.weather_forecast_app"
-        minSdk = 24
+        minSdk = 27
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"

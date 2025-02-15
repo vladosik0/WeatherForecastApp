@@ -1,6 +1,7 @@
 package com.vladosik0.weather_forecast_app
 
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -12,6 +13,7 @@ import com.vladosik0.weather_forecast_app.presentation.navigation.WeatherForecas
 import com.vladosik0.weather_forecast_app.ui.theme.WeatherForecastAppTheme
 
 class MainActivity : ComponentActivity() {
+    @SuppressLint("CoroutineCreationDuringComposition")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {

@@ -5,9 +5,9 @@ import androidx.annotation.RequiresApi
 import com.vladosik0.weather_forecast_app.data.network.dto.ConditionDto
 import com.vladosik0.weather_forecast_app.data.network.dto.CurrentDto
 import com.vladosik0.weather_forecast_app.data.network.dto.LocationDto
-import com.vladosik0.weather_forecast_app.domain.Condition
-import com.vladosik0.weather_forecast_app.domain.Current
-import com.vladosik0.weather_forecast_app.domain.Location
+import com.vladosik0.weather_forecast_app.domain.data_serialization.Condition
+import com.vladosik0.weather_forecast_app.domain.data_serialization.Current
+import com.vladosik0.weather_forecast_app.domain.data_serialization.Location
 import java.time.LocalDateTime
 import java.time.ZoneId
 import java.time.ZonedDateTime

@@ -6,7 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vladosik0.weather_forecast_app.data.CurrentWeatherRepository
-import com.vladosik0.weather_forecast_app.domain.CurrentLocationWeather
+import com.vladosik0.weather_forecast_app.domain.data_serialization.CurrentLocationWeather
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -18,7 +18,8 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class MainScreenViewModel(
-    private val currentWeatherRepository: CurrentWeatherRepository
+    private val currentWeatherRepository: CurrentWeatherRepository,
+    private val isConnected: StateFlow<Boolean>
 ) : ViewModel() {
 
     var mainScreenUiState: MainScreenUiState by mutableStateOf(MainScreenUiState.LOADING)
@@ -76,8 +77,16 @@ class MainScreenViewModel(
 
     fun onPullToRefreshTrigger() {
         _isRefreshing.update { true }
+        if(!isConnected.value) {
+            _isRefreshing.update {false}
+            return
+        }
         viewModelScope.launch { getCurrentPlaceWeather() }
         viewModelScope.launch { getFavouritePlacesWeathers() }
+    }
+
+    fun isConnected() : StateFlow<Boolean> {
+        return isConnected
     }
 
 }

@@ -1,11 +1,9 @@
 package com.vladosik0.weather_forecast_app.data
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.vladosik0.weather_forecast_app.data.mappers.toCurrent
 import com.vladosik0.weather_forecast_app.data.mappers.toLocation
 import com.vladosik0.weather_forecast_app.data.network.CurrentWeatherApiService
-import com.vladosik0.weather_forecast_app.domain.CurrentLocationWeather
+import com.vladosik0.weather_forecast_app.domain.data_serialization.CurrentLocationWeather
 import kotlinx.coroutines.Deferred
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -19,7 +17,6 @@ interface CurrentWeatherRepository {
 class DefaultCurrentWeatherRepository(
     private val currentWeatherApiService: CurrentWeatherApiService
 ) : CurrentWeatherRepository {
-    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getCurrentWeather(location: String): CurrentLocationWeather {
         return try {
             val result = currentWeatherApiService.getCurrentWeather(location)
@@ -40,7 +37,6 @@ class DefaultCurrentWeatherRepository(
         }
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
     override suspend fun getFavouritePlacesWeathers(locations: List<String>): List<CurrentLocationWeather> {
         val favouritePlacesWeathers = mutableListOf<Deferred<CurrentLocationWeather>>()
         coroutineScope {

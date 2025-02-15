@@ -11,7 +11,8 @@ object AppViewModelProvider {
     val Factory = viewModelFactory {
         initializer {
             MainScreenViewModel(
-                weatherForecastApplication().container.currentWeatherRepository
+                weatherForecastApplication().container.currentWeatherRepository,
+                isConnected = weatherForecastApplication().container.connectivityViewModel.isConnected
             )
         }
     }

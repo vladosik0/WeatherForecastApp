@@ -1,9 +1,9 @@
 package com.vladosik0.weather_forecast_app.presentation.screens
 
 import android.annotation.SuppressLint
+import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -33,7 +33,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.vladosik0.weather_forecast_app.R
-import com.vladosik0.weather_forecast_app.domain.CurrentLocationWeather
+import com.vladosik0.weather_forecast_app.domain.data_serialization.CurrentLocationWeather
 import com.vladosik0.weather_forecast_app.presentation.PullToRefreshBox
 import com.vladosik0.weather_forecast_app.presentation.navigation.NavigationRoutes
 
@@ -44,6 +44,7 @@ fun MainScreen(
     currentPlaceWeather: CurrentLocationWeather,
     favouritePlacesWeathers: List<CurrentLocationWeather>,
     isRefreshing: Boolean,
+    isConnected: Boolean,
     onRefresh: () -> Unit
 ) {
     Scaffold(topBar = {
@@ -55,8 +56,19 @@ fun MainScreen(
             ),
         )
     }) {
+        val context = LocalContext.current
+        if(!isConnected) {
+            Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
+        }
         PullToRefreshBox(
-            isRefreshing = isRefreshing, onRefresh = onRefresh, modifier = Modifier.padding(it)
+            isRefreshing = isRefreshing,
+            onRefresh = {
+                if(isConnected) {
+                    onRefresh()
+                } else {
+                    Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
+                } },
+            modifier = Modifier.padding(it)
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize().padding(6.dp)
