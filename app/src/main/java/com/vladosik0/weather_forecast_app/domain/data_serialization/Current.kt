@@ -1,4 +1,4 @@
-package com.vladosik0.weather_forecast_app.domain
+package com.vladosik0.weather_forecast_app.domain.data_serialization
 
 data class Current (
     val condition: Condition = Condition(),

@@ -1,4 +1,4 @@
-package com.vladosik0.weather_forecast_app.domain
+package com.vladosik0.weather_forecast_app.domain.location_helper
 
 import android.annotation.SuppressLint
 import android.content.Context
