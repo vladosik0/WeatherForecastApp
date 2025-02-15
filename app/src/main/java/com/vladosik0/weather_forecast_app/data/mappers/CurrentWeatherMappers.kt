@@ -1,7 +1,5 @@
 package com.vladosik0.weather_forecast_app.data.mappers
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.vladosik0.weather_forecast_app.data.network.dto.ConditionDto
 import com.vladosik0.weather_forecast_app.data.network.dto.CurrentDto
 import com.vladosik0.weather_forecast_app.data.network.dto.LocationDto
@@ -23,7 +21,6 @@ fun CurrentDto.toCurrent() : Current {
     )
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun LocationDto.toLocation() : Location {
     val inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm")
     val dateTime = LocalDateTime.parse(localtime, inputFormatter)
