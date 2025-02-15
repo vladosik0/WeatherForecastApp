@@ -63,9 +63,8 @@ fun MainScreen(
         PullToRefreshBox(
             isRefreshing = isRefreshing,
             onRefresh = {
-                if(isConnected) {
-                    onRefresh()
-                } else {
+                onRefresh()
+                if(!isConnected) {
                     Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
                 } },
             modifier = Modifier.padding(it)

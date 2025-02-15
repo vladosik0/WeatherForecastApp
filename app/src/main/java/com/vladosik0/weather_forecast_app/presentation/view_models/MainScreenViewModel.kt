@@ -58,7 +58,6 @@ class MainScreenViewModel(
 
     private suspend fun getFavouritePlacesWeathers() {
         _favouritePlacesWeathers.value = currentWeatherRepository.getFavouritePlacesWeathers(favouritePlaces)
-        _isRefreshing.update { false }
     }
 
     private suspend fun getCurrentPlaceWeather() {
@@ -82,7 +81,10 @@ class MainScreenViewModel(
             return
         }
         viewModelScope.launch { getCurrentPlaceWeather() }
-        viewModelScope.launch { getFavouritePlacesWeathers() }
+        viewModelScope.launch {
+            getFavouritePlacesWeathers()
+            _isRefreshing.update { false }
+        }
     }
 
     fun isConnected() : StateFlow<Boolean> {

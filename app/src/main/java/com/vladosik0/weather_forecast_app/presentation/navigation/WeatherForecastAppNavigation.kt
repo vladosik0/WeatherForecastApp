@@ -34,7 +34,7 @@ fun WeatherForecastApp() {
             val currentPlaceWeather by mainScreenViewModel.currentPlaceWeather.collectAsStateWithLifecycle()
             val favoritePlacesWeathers by mainScreenViewModel.favouritePlacesWeathers.collectAsStateWithLifecycle()
             val isRefreshing by mainScreenViewModel.isRefreshing.collectAsStateWithLifecycle()
-            val isConnected = mainScreenViewModel.isConnected().collectAsStateWithLifecycle()
+            val isConnected by mainScreenViewModel.isConnected().collectAsStateWithLifecycle()
             val mainScreenUiState = mainScreenViewModel.mainScreenUiState
             when(mainScreenUiState) {
                 MainScreenUiState.SUCCESS -> MainScreen(
@@ -42,7 +42,7 @@ fun WeatherForecastApp() {
                     currentPlaceWeather,
                     favoritePlacesWeathers,
                     isRefreshing,
-                    isConnected.value,
+                    isConnected,
                     mainScreenViewModel::onPullToRefreshTrigger
                 )
                 else -> LoadingScreen()
