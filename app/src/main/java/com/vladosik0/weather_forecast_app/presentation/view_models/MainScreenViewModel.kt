@@ -75,15 +75,13 @@ class MainScreenViewModel(
     }
 
     fun onPullToRefreshTrigger() {
-        _isRefreshing.update { true }
-        if(!isConnected.value) {
-            _isRefreshing.update {false}
-            return
-        }
-        viewModelScope.launch { getCurrentPlaceWeather() }
-        viewModelScope.launch {
-            getFavouritePlacesWeathers()
-            _isRefreshing.update { false }
+        if(isConnected.value) {
+            _isRefreshing.update { true }
+            viewModelScope.launch {
+                getCurrentPlaceWeather()
+                getFavouritePlacesWeathers()
+                _isRefreshing.update { false }
+            }
         }
     }
 
