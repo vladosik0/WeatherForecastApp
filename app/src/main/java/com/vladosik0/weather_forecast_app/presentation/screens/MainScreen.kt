@@ -45,7 +45,7 @@ fun MainScreen(
     currentPlaceWeather: CurrentLocationWeather,
     favouritePlacesWeathers: List<CurrentLocationWeather>,
     isRefreshing: Boolean,
-    isConnected: Boolean,
+    toastMessage: String,
     onRefresh: () -> Unit
 ) {
     Scaffold(topBar = {
@@ -58,12 +58,12 @@ fun MainScreen(
         )
     }) {
         val context = LocalContext.current
-        checkConnection(context, isConnected)
+        showToast(context, toastMessage)
         PullToRefreshBox(
             isRefreshing = isRefreshing,
             onRefresh = {
                 onRefresh()
-                checkConnection(context, isConnected)
+                showToast(context, toastMessage)
             },
             modifier = Modifier.padding(it)
         ) {
@@ -148,8 +148,8 @@ fun LocationItem(
     }
 }
 
-fun checkConnection(context: Context, isConnected: Boolean) {
-    if(!isConnected) {
-        Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
+fun showToast(context: Context, toastMessage: String) {
+    if(toastMessage.isNotEmpty()) {
+        Toast.makeText(context, toastMessage, Toast.LENGTH_SHORT).show()
     }
 }

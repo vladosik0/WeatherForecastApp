@@ -8,7 +8,10 @@ import androidx.lifecycle.viewModelScope
 import com.vladosik0.weather_forecast_app.data.CurrentWeatherRepository
 import com.vladosik0.weather_forecast_app.domain.data_serialization.CurrentLocationWeather
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.MutableSharedFlow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharedFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -19,7 +22,7 @@ import kotlinx.coroutines.launch
 
 class MainScreenViewModel(
     private val currentWeatherRepository: CurrentWeatherRepository,
-    private val isConnected: StateFlow<Boolean>
+    private val isConnected: Flow<Boolean>
 ) : ViewModel() {
 
     var mainScreenUiState: MainScreenUiState by mutableStateOf(MainScreenUiState.LOADING)
@@ -28,9 +31,22 @@ class MainScreenViewModel(
     private val _isRefreshing = MutableStateFlow(false)
     val isRefreshing: StateFlow<Boolean> = _isRefreshing.asStateFlow()
 
+    private val _toastEvent = MutableSharedFlow<String>(replay = 1)
+    val toastEvent: SharedFlow<String> = _toastEvent
+
     private val favouritePlaces = listOf(
         "London", "Kyiv", "New York", "Madrid", "Amsterdam", "Lisbon", "Munich", "Tokyo"
     )
+
+    init {
+        viewModelScope.launch {
+            isConnected.collect { value ->
+                if(!value) {
+                    _toastEvent.emit("No network connection")
+                }
+            }
+        }
+    }
 
     private val _favouritePlacesWeathers = MutableStateFlow(listOf<CurrentLocationWeather>())
     val favouritePlacesWeathers = _favouritePlacesWeathers
@@ -75,18 +91,17 @@ class MainScreenViewModel(
     }
 
     fun onPullToRefreshTrigger() {
-        if(isConnected.value) {
-            _isRefreshing.update { true }
-            viewModelScope.launch {
-                getCurrentPlaceWeather()
-                getFavouritePlacesWeathers()
-                _isRefreshing.update { false }
+        viewModelScope.launch {
+            isConnected.collect { value ->
+                if (value) {
+                    _isRefreshing.update { true }
+                    getCurrentPlaceWeather()
+                    getFavouritePlacesWeathers()
+                    _isRefreshing.update { false }
+                } else {
+                    _toastEvent.emit("No network connection")
+                }
             }
         }
     }
-
-    fun isConnected() : StateFlow<Boolean> {
-        return isConnected
-    }
-
 }
