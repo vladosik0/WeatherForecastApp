@@ -1,6 +1,7 @@
 package com.vladosik0.weather_forecast_app.presentation.screens
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.widget.Toast
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
@@ -57,16 +58,13 @@ fun MainScreen(
         )
     }) {
         val context = LocalContext.current
-        if(!isConnected) {
-            Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
-        }
+        checkConnection(context, isConnected)
         PullToRefreshBox(
             isRefreshing = isRefreshing,
             onRefresh = {
                 onRefresh()
-                if(!isConnected) {
-                    Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
-                } },
+                checkConnection(context, isConnected)
+            },
             modifier = Modifier.padding(it)
         ) {
             LazyColumn(
@@ -147,5 +145,11 @@ fun LocationItem(
                 contentDescription = locationWeather.current.condition.text
             )
         }
+    }
+}
+
+fun checkConnection(context: Context, isConnected: Boolean) {
+    if(!isConnected) {
+        Toast.makeText(context, "No network connection", Toast.LENGTH_SHORT).show()
     }
 }
